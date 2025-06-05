@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Таблица умножения</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            max-width: 1000px;
+            width: 100%;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .multiplication-table {
+            display: grid;
+            grid-template-columns: repeat(11, 1fr);
+            gap: 2px;
+            margin: 20px 0;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .cell {
+            aspect-ratio: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .header {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            font-size: 16px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+        }
+
+        .row-header {
+            background: linear-gradient(45deg, #764ba2, #667eea);
+            color: white;
+            font-size: 16px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+        }
+
+        .result {
+            background: linear-gradient(45deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+        }
+
+        .result:hover {
+            transform: scale(1.1);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            z-index: 10;
+            position: relative;
+        }
+
+        .corner {
+            background: linear-gradient(45deg, #333, #555);
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .info {
+            text-align: center;
+            margin-top: 20px;
+            color: #666;
+            font-style: italic;
+        }
+
+        .github-link {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #333;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .github-link:hover {
+            background: #555;
+            transform: translateY(-2px);
+            box-shadow: 0 7px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        @media (max-width: 768px) {
+            .cell {
+                font-size: 12px;
+            }
+            
+            h1 {
+                font-size: 2em;
+            }
+            
+            .container {
+                padding: 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .cell {
+                font-size: 10px;
+            }
+            
+            h1 {
+                font-size: 1.5em;
+            }
+        }
+
+        .animation {
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <a href="https://github.com/chubukou/test-repo" class="github-link" target="_blank">
+        📁 GitHub Repo
+    </a>
+
+    <div class="container animation">
+        <h1>🔢 Таблица умножения 🔢</h1>
+        
+        <div class="multiplication-table" id="multiplicationTable">
+            <!-- Таблица будет сгенерирована JavaScript -->
+        </div>
+        
+        <div class="info">
+            <p>✨ Наведите курсор на ячейки для интерактивного эффекта ✨</p>
+            <p>Создано с помощью GitHub Pages</p>
+        </div>
+    </div>
+
+    <script>
+        function createMultiplicationTable() {
+            const table = document.getElementById('multiplicationTable');
+            
+            // Создаем угловую ячейку
+            const corner = document.createElement('div');
+            corner.className = 'cell corner';
+            corner.textContent = '×';
+            table.appendChild(corner);
+            
+            // Создаем заголовки столбцов
+            for (let i = 1; i <= 10; i++) {
+                const header = document.createElement('div');
+                header.className = 'cell header';
+                header.textContent = i;
+                table.appendChild(header);
+            }
+            
+            // Создаем строки таблицы
+            for (let row = 1; row <= 10; row++) {
+                // Заголовок строки
+                const rowHeader = document.createElement('div');
+                rowHeader.className = 'cell row-header';
+                rowHeader.textContent = row;
+                table.appendChild(rowHeader);
+                
+                // Ячейки с результатами
+                for (let col = 1; col <= 10; col++) {
+                    const cell = document.createElement('div');
+                    cell.className = 'cell result';
+                    cell.textContent = row * col;
+                    
+                    // Добавляем интерактивность
+                    cell.addEventListener('mouseenter', function() {
+                        this.style.background = 'linear-gradient(45deg, #ff9a9e 0%, #fecfef 50%, #fecfef 100%)';
+                        this.style.fontSize = '16px';
+                    });
+                    
+                    cell.addEventListener('mouseleave', function() {
+                        this.style.background = 'linear-gradient(45deg, #f093fb 0%, #f5576c 100%)';
+                        this.style.fontSize = '14px';
+                    });
+                    
+                    cell.addEventListener('click', function() {
+                        alert(`${row} × ${col} = ${row * col}`);
+                    });
+                    
+                    table.appendChild(cell);
+                }
+            }
+        }
+        
+        // Создаем таблицу при загрузке страницы
+        document.addEventListener('DOMContentLoaded', function() {
+            createMultiplicationTable();
+            
+            // Добавляем анимацию появления ячеек
+            const cells = document.querySelectorAll('.cell');
+            cells.forEach((cell, index) => {
+                setTimeout(() => {
+                    cell.style.animation = 'fadeInUp 0.3s ease-out';
+                }, index * 20);
+            });
+        });
+        
+        // Добавляем эффект радуги при клике на заголовок
+        document.querySelector('h1').addEventListener('click', function() {
+            this.style.animation = 'none';
+            setTimeout(() => {
+                this.style.animation = 'fadeInUp 0.6s ease-out';
+            }, 10);
+        });
+    </script>
+</body>
+</html>
